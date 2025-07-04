@@ -47,7 +47,7 @@ describe('Unit tests', function () {
     // item that is not special
     it('basic items', function() {
         const gildedRose = new GildedRose([ new Item('Pizza', 3, 5), 
-                                            new Item('Pasta', 1, 20),
+                                            new Item('Pasta', 0, 20),
                                             new Item('Burger', 16, 12)
          ]);
 
@@ -55,8 +55,8 @@ describe('Unit tests', function () {
         expect(items[0].quality).to.equal(4);
         expect(items[0].sellIn).to.equal(2);
 
-        expect(items[1].quality).to.equal(19);
-        expect(items[1].sellIn).to.equal(0);
+        expect(items[1].quality).to.equal(18);
+        expect(items[1].sellIn).to.equal(-1);
 
         expect(items[2].quality).to.equal(11);
         expect(items[2].sellIn).to.equal(15);
@@ -66,13 +66,28 @@ describe('Unit tests', function () {
         expect(items[0].quality).to.equal(3);
         expect(items[0].sellIn).to.equal(1);
 
-        expect(items[1].quality).to.equal(17);
-        expect(items[1].sellIn).to.equal(-1);
+        expect(items[1].quality).to.equal(16);
+        expect(items[1].sellIn).to.equal(-2);
 
         expect(items[2].quality).to.equal(10);
         expect(items[2].sellIn).to.equal(14);
 
     });
     
+
+    // sulfuras has the same quality and sell in
+     it('same for sulfuras', function() {
+        const gildedRose = new GildedRose([ new Item('Sulfuras, Hand of Ragnaros', 5, 24) ]);
+        var items = gildedRose.updateQuality();
+        
+        expect(items[0].quality).to.equal(24);
+        expect(items[0].sellIn).to.equal(5);
+
+        // second update
+        items = gildedRose.updateQuality();
+        
+        expect(items[0].quality).to.equal(24);
+        expect(items[0].sellIn).to.equal(5);
+    });
 
 });

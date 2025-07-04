@@ -29,12 +29,11 @@ export class GildedRose {
             var itemSellIn: number = this.items[i].sellIn;
             var itemQuality: number = this.items[i].quality;
 
-            if (itemName != Items.AgedBrie && itemName != Items.BackstagePasses
-                && itemName != Items.Sulfuras) {
+            if (!isItemSpecial(itemName)) {
                 // basic items
 
                 if (itemQuality > 0)
-                    if (itemSellIn < 0)
+                    if (itemSellIn <= 0)
                         itemQuality = itemQuality - 2;
                     else
                         itemQuality--;
@@ -55,22 +54,17 @@ export class GildedRose {
 
                     itemQuality = Math.min(itemQuality, 50);
                 }
-            } else if (itemQuality < 50) {
+            } else if (itemQuality < 50 && itemName != Items.Sulfuras) {
                itemQuality++;
             }
+          
             
-            
-            if (itemName != Items.Sulfuras) {
-                itemSellIn = itemSellIn - 1;
-            }
-            
-            
-            if (itemSellIn < 0) {
+            if (itemSellIn <= 0) {
                 if (itemName != Items.AgedBrie) {
                     if (itemName != Items.BackstagePasses) {
                         if (itemQuality > 0) {
                             if (itemName != Items.Sulfuras) {
-                                itemQuality = itemQuality - 1
+                                itemQuality = itemQuality
                             }
                         }
                     } else {
@@ -82,10 +76,24 @@ export class GildedRose {
                     }
                 }
             }
+
+
+            if (itemName != Items.Sulfuras) {
+                itemSellIn--;
+            }
+
             this.items[i].quality = itemQuality;
             this.items[i].sellIn = itemSellIn;
         }
 
         return this.items;
     }
+}
+
+
+function isItemSpecial(item: string): boolean {
+    if (item != Items.AgedBrie && item != Items.BackstagePasses && item != Items.Sulfuras)
+        return false;
+
+    return true;
 }
