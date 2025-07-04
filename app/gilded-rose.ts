@@ -10,6 +10,12 @@ export class Item {
     }
 }
 
+enum SpecialItems {
+    AgedBrie = 'Aged Brie',
+    BackstagePasses = 'Backstage passes to a TAFKAL80ETC concert',
+    Sulfuras = 'Sulfuras, Hand of Ragnaros'
+}
+
 export class GildedRose {
     items: Array<Item>;
 

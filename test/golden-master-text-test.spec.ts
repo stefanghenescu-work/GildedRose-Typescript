@@ -37,22 +37,22 @@ describe('Gilded Rose', function () {
 
     // quality over 50
     it('quality over 50', function() {
-        const gildedRose = new GildedRose([ new Item('Aged Brie', -1, 50) ]);
+        const gildedRose = new GildedRose([ new Item('Aged Brie', -1, 52) ]);
         var items = gildedRose.updateQuality();
         
-        expect(items[0].quality).to.equal(50);
+        expect(items[0].quality).to.equal(52);
 
         items = gildedRose.updateQuality();
-        expect(items[0].quality).to.equal(50);
+        expect(items[0].quality).to.equal(52);
     });
 
 
     // quality under 50
     it('quality under 50', function() {
-        const gildedRose = new GildedRose([ new Item('Aged Brie', -1, 48) ]);
+        const gildedRose = new GildedRose([ new Item('Aged Brie', -1, 47) ]);
         var items = gildedRose.updateQuality();
         
-        expect(items[0].quality).to.equal(49);
+        expect(items[0].quality).to.equal(50);
 
         items = gildedRose.updateQuality();
         expect(items[0].quality).to.equal(50);
