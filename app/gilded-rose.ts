@@ -55,32 +55,16 @@ export class GildedRose {
                     itemQuality = Math.min(itemQuality, 50);
                 }
             } else if (itemQuality < 50 && itemName != Items.Sulfuras) {
-               itemQuality++;
+                // Sulfuras stays the same
+                itemQuality++;
             }
           
-            
-            if (itemSellIn <= 0) {
-                if (itemName != Items.AgedBrie) {
-                    if (itemName != Items.BackstagePasses) {
-                        if (itemQuality > 0) {
-                            if (itemName != Items.Sulfuras) {
-                                itemQuality = itemQuality
-                            }
-                        }
-                    } else {
-                        itemQuality = 0;
-                    }
-                } else {
-                    if (itemQuality < 50) {
-                        itemQuality = itemQuality + 1
-                    }
-                }
-            }
+            if (itemSellIn <= 0 && itemName == Items.AgedBrie && itemQuality < 50)
+                itemQuality++;
 
 
-            if (itemName != Items.Sulfuras) {
+            if (itemName != Items.Sulfuras)
                 itemSellIn--;
-            }
 
             this.items[i].quality = itemQuality;
             this.items[i].sellIn = itemSellIn;

@@ -47,18 +47,6 @@ describe('Golden Master Test', function () {
     });
 
 
-    // quality under 50
-    it('quality under 50', function() {
-        const gildedRose = new GildedRose([ new Item('Aged Brie', -1, 47) ]);
-        var items = gildedRose.updateQuality();
-        
-        expect(items[0].quality).to.equal(49);
-
-        items = gildedRose.updateQuality();
-        expect(items[0].quality).to.equal(50);
-    });
-
-
     // negative quality
     // this is not verified in code but the requirement is: the quality of an item is never negative
     it('negative quality', function() {

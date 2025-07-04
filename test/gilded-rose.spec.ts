@@ -90,4 +90,15 @@ describe('Unit tests', function () {
         expect(items[0].sellIn).to.equal(5);
     });
 
+
+    // quality under 50 for negative sell in
+    it('quality under 50 for negative sell in', function() {
+        const gildedRose = new GildedRose([ new Item('Aged Brie', -1, 47) ]);
+        var items = gildedRose.updateQuality();
+        
+        expect(items[0].quality).to.equal(49);
+
+        items = gildedRose.updateQuality();
+        expect(items[0].quality).to.equal(50);
+    });
 });
