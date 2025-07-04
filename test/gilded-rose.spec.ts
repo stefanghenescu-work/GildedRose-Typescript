@@ -126,7 +126,7 @@ describe('Unit tests', function () {
 
 
     // quality over 50 for Sulfuras
-     it('quality over 50 Sulfuras', function() {
+    it('quality over 50 Sulfuras', function() {
         const gildedRose = new GildedRose([ new Item('Sulfuras, Hand of Ragnaros', 2, 80) ]);
         var items = gildedRose.updateQuality();
         
@@ -134,5 +134,17 @@ describe('Unit tests', function () {
 
         items = gildedRose.updateQuality();
         expect(items[0].quality).to.equal(80);
-    }); 
+    });
+
+    // conjured items
+    it('conjured items', function() {
+        const gildedRose = new GildedRose([ new Item('Conjured Mana Cake', 1, 10) ]);
+        var items = gildedRose.updateQuality();
+        
+        expect(items[0].quality).to.equal(8);
+
+        items = gildedRose.updateQuality();
+        expect(items[0].quality).to.equal(4);
+    });
+
 });
