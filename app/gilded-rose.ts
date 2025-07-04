@@ -10,6 +10,12 @@ export class Item {
     }
 }
 
+enum Items {
+    AgedBrie = 'Aged Brie',
+    BackstagePasses = 'Backstage passes to a TAFKAL80ETC concert',
+    Sulfuras = 'Sulfuras, Hand of Ragnaros'
+}
+
 export class GildedRose {
     items: Array<Item>;
 
@@ -19,51 +25,59 @@ export class GildedRose {
 
     updateQuality() {
         for (let i = 0; i < this.items.length; i++) {
-            if (this.items[i].name != 'Aged Brie' && this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-                if (this.items[i].quality > 0) {
-                    if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-                        this.items[i].quality = this.items[i].quality - 1
-                    }
+            var itemName: string = this.items[i].name;
+            var itemSellIn: number = this.items[i].sellIn;
+            var itemQuality: number = this.items[i].quality;
+
+            if (!isItemSpecial(itemName)) {
+                // basic items
+
+                if (itemQuality > 0)
+                    if (itemSellIn <= 0)
+                        itemQuality = itemQuality - 2;
+                    else
+                        itemQuality--;
+
+            } else if (itemName == Items.BackstagePasses) {
+                // increase quality depending on sell in
+                // for case when quality > 50 from the beginning, it stays the same
+                
+                if (itemQuality < 50) {
+                    if (itemSellIn <= 0)
+                        itemQuality = 0;
+                    else if (itemSellIn <= 5)
+                        itemQuality += 3;
+                    else if (itemSellIn <= 10)
+                        itemQuality += 2;
+                    else
+                        itemQuality++;
+
+                    itemQuality = Math.min(itemQuality, 50);
                 }
-            } else {
-                if (this.items[i].quality < 50) {
-                    this.items[i].quality = this.items[i].quality + 1
-                    if (this.items[i].name == 'Backstage passes to a TAFKAL80ETC concert') {
-                        if (this.items[i].sellIn < 11) {
-                            if (this.items[i].quality < 50) {
-                                this.items[i].quality = this.items[i].quality + 1
-                            }
-                        }
-                        if (this.items[i].sellIn < 6) {
-                            if (this.items[i].quality < 50) {
-                                this.items[i].quality = this.items[i].quality + 1
-                            }
-                        }
-                    }
-                }
+            } else if (itemQuality < 50 && itemName != Items.Sulfuras) {
+                // Sulfuras stays the same
+                itemQuality++;
             }
-            if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-                this.items[i].sellIn = this.items[i].sellIn - 1;
-            }
-            if (this.items[i].sellIn < 0) {
-                if (this.items[i].name != 'Aged Brie') {
-                    if (this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-                        if (this.items[i].quality > 0) {
-                            if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-                                this.items[i].quality = this.items[i].quality - 1
-                            }
-                        }
-                    } else {
-                        this.items[i].quality = this.items[i].quality - this.items[i].quality
-                    }
-                } else {
-                    if (this.items[i].quality < 50) {
-                        this.items[i].quality = this.items[i].quality + 1
-                    }
-                }
-            }
+          
+            if (itemSellIn <= 0 && itemName == Items.AgedBrie && itemQuality < 50)
+                itemQuality++;
+
+
+            if (itemName != Items.Sulfuras)
+                itemSellIn--;
+
+            this.items[i].quality = itemQuality;
+            this.items[i].sellIn = itemSellIn;
         }
 
         return this.items;
     }
+}
+
+
+function isItemSpecial(item: string): boolean {
+    if (item != Items.AgedBrie && item != Items.BackstagePasses && item != Items.Sulfuras)
+        return false;
+
+    return true;
 }
