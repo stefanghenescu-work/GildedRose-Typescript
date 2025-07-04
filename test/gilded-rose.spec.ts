@@ -101,4 +101,38 @@ describe('Unit tests', function () {
         items = gildedRose.updateQuality();
         expect(items[0].quality).to.equal(50);
     });
+
+
+     // quality over 50
+    it('quality over 50', function() {
+        const gildedRose = new GildedRose([ new Item('Aged Brie', -1, 52) ]);
+        var items = gildedRose.updateQuality();
+        
+        expect(items[0].quality).to.equal(52);
+
+        items = gildedRose.updateQuality();
+        expect(items[0].quality).to.equal(52);
+    });
+
+
+    // negative quality
+    // this is not verified in code but the requirement is: the quality of an item is never negative
+    it('negative quality', function() {
+        const gildedRose = new GildedRose([ new Item('Aged Brie', 4, -10) ]);
+        var items = gildedRose.updateQuality();
+        
+        expect(items[0].quality).to.equal(-9);
+    });
+
+
+    // quality over 50 for Sulfuras
+     it('quality over 50 Sulfuras', function() {
+        const gildedRose = new GildedRose([ new Item('Sulfuras, Hand of Ragnaros', 2, 80) ]);
+        var items = gildedRose.updateQuality();
+        
+        expect(items[0].quality).to.equal(80);
+
+        items = gildedRose.updateQuality();
+        expect(items[0].quality).to.equal(80);
+    }); 
 });
