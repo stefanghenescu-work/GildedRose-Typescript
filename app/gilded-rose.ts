@@ -13,7 +13,8 @@ export class Item {
 enum Items {
     AgedBrie = 'Aged Brie',
     BackstagePasses = 'Backstage passes to a TAFKAL80ETC concert',
-    Sulfuras = 'Sulfuras, Hand of Ragnaros'
+    Sulfuras = 'Sulfuras, Hand of Ragnaros',
+    Conjured = 'Conjured Mana Cake'
 }
 
 export class GildedRose {
@@ -54,6 +55,13 @@ export class GildedRose {
 
                     itemQuality = Math.min(itemQuality, 50);
                 }
+            } else if (itemName == Items.Conjured) {
+                // "Conjured" items degrade in quality twice as fast as basic items
+                if (itemQuality > 0)
+                    if (itemSellIn <= 0)
+                        itemQuality = itemQuality - 4;
+                    else
+                        itemQuality = itemQuality - 2;
             } else if (itemQuality < 50 && itemName != Items.Sulfuras) {
                 // Sulfuras stays the same
                 itemQuality++;
@@ -76,7 +84,8 @@ export class GildedRose {
 
 
 function isItemSpecial(item: string): boolean {
-    if (item != Items.AgedBrie && item != Items.BackstagePasses && item != Items.Sulfuras)
+    if (item != Items.AgedBrie && item != Items.BackstagePasses && item != Items.Sulfuras
+        && item != Items.Conjured)
         return false;
 
     return true;
